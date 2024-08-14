@@ -29,6 +29,7 @@
   "devDependencies": {
     "@builder.io/qwik": "^1.8.0",
     "@builder.io/qwik-city": "^1.8.0",
+    "@types/axios": "^0.9.36",
     "@types/eslint": "8.56.10",
     "@types/node": "20.14.11",
     "@typescript-eslint/eslint-plugin": "7.16.1",
@@ -44,5 +45,9 @@
     "undici": "*",
     "vite": "5.3.5",
     "vite-tsconfig-paths": "^4.2.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.1",
+    "axios": "^1.7.3"
   }
 }
