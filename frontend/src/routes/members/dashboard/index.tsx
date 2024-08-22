@@ -1,5 +1,5 @@
-import { component$, useSignal, useClientEffect$ } from "@builder.io/qwik";
-import { useEndpoint, useNavigate } from "@builder.io/qwik-city";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { routeLoader$, useNavigate } from "@builder.io/qwik-city";
 import { Link } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
@@ -13,33 +13,37 @@ interface SessionData {
 
 // Server Side Get Session
 export const onGet: RequestHandler<SessionData> = async ({
-  response,
-  cookie,
-}) => {
+    //response,
+    cookie,
+  }) => {
   const profile = await getUserProfile(cookie);
 
+  console.log({cookie}, {profile})
+
   if (profile?.role !== "free") {
-    throw response.redirect("/login", 300);
+    //throw response.redirect("/login", 300);
   }
 
   // Return profile
   return profile;
-};
-
+}
+ 
 // Client Side Component
 export default component$(() => {
-  const sessionData = useEndpoint<SessionData>();
+  // const sessionData = useEndpoint<SessionData>();
   const isShow = useSignal(false);
   const nav = useNavigate();
 
-  useClientEffect$(async () => {
-    const session = await sessionData?.value;
-    if (!session?.isSession) {
-      nav.path = "/login";
-    } else {
-      isShow.value = true;
-    }
-  });
+  // eslint-disable-next-line qwik/no-use-visible-task
+  // useVisibleTask$(async () => {
+  //   const session = await sessionData?.value;
+  //   if (!session?.isSession) {
+  //     nav("/login")
+  //   } else {
+  //     isShow.value = true;
+  //   }
+  // });
+  isShow.value = true
 
   return (
     <main>

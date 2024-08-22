@@ -3,7 +3,7 @@ import { Link, useNavigate } from "@builder.io/qwik-city"
 
 import { Logo } from "../logo/logo"
 import { ButtonStd } from "../ui/button-std"
-import { UserSessionContextId } from "~/routes/layout-site"
+import { UserSessionContextId } from "~/routes/layout"
 import { supabase } from  '~/utils/supabase'
 
 export const Navigation = component$(() => {
@@ -20,6 +20,7 @@ export const Navigation = component$(() => {
     // Handle client side
     await supabase.auth.signOut();
     nav("/")
+    userSession.isLoggedIn = false
   })
 
   // eslint-disable-next-line qwik/no-use-visible-task

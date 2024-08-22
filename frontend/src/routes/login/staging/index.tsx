@@ -8,7 +8,7 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import { useNavigate } from "@builder.io/qwik-city";
 import { Link } from "@builder.io/qwik-city";
 import { supabase } from "~/utils/supabase";
-import { UserSessionContextId } from "~/routes/layout-site";
+import { UserSessionContextId } from "~/routes/layout";
 import axios from "axios";
 
 export default component$(() => {
