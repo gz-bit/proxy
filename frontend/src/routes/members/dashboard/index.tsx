@@ -12,13 +12,16 @@ interface SessionData {
 }
 
 // Server Side Get Session
-export const onGet: RequestHandler<SessionData> = async ({
-    //response,
-    cookie,
-  }) => {
-  const profile = await getUserProfile(cookie);
+export const onGet: RequestHandler<SessionData> = async ({params}
+//export const onGet: RequestHandler<SessionData> = async (
+    // {
+    //   response,
+    //   cookie,
+    // }
+  ) => {
+  const profile = await console.log({params})//getUserProfile(cookie);
 
-  console.log({cookie}, {profile})
+  //console.log({cookie}, {profile})
 
   if (profile?.role !== "free") {
     //throw response.redirect("/login", 300);
@@ -30,7 +33,7 @@ export const onGet: RequestHandler<SessionData> = async ({
  
 // Client Side Component
 export default component$(() => {
-  // const sessionData = useEndpoint<SessionData>();
+  //const sessionData = useEndpoint<SessionData>();
   const isShow = useSignal(false);
   const nav = useNavigate();
 

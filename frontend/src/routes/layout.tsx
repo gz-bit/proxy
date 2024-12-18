@@ -7,6 +7,10 @@ import { supabase } from '~/utils/supabase'
 import { Navigation } from '../components/site/navigation/navigation';
 import { Footer } from '../components/site/footer/footer';
 
+export type UserSession = {
+  userId: string
+  isLoggedIn: boolean
+}
 export const UserSessionContextId = createContextId('user-session') 
 
 export default component$(() => {

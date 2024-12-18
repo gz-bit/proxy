@@ -1,4 +1,20 @@
 import { supabaseServer } from "./supabase"
+import fs from 'fs'
+
+export const logObject = (object: any) => { // does not work
+  const logFile = '~/utils/logfile.txt'
+  fs.writeFile(
+    logFile, 
+    JSON.stringify(object), 
+    (err)=> err ? console.log(err) : console.log("New log in ${logFile}") 
+  )
+}
+
+export const showObject = (object: any) => {
+  alert(JSON.stringify(object))
+}
+
+
 
 // Check email is valid
 export const validateEmail = (email: string) => {

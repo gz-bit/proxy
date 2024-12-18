@@ -1,27 +1,27 @@
 import { component$, useStore, useSignal, $ } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
+import { Link, useLocation } from "@builder.io/qwik-city";
 import { validateEmail } from "~/utils/helpers";
 import { supabase } from "~/utils/supabase";
 import { Message } from "~/components/site/ui/message";
 
 //export const REDIRECT_URL = "http://localhost:80/login/staging"
-export const REDIRECT_URL = "http://localhost:5173/login/staging"
+//export const REDIRECT_URL = "http://localhost:5173/login/staging"
 
 
 export default component$(() => {
   const message: any = useStore({ message: undefined, status: "error" });
   const isLoading = useSignal(false);
-  // const loc = useLocation();
+  const loc = useLocation()
 
   // Handle GitHub Login
   const handleGitHubLogin = $(async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: REDIRECT_URL,
+        redirectTo: loc.url.href + 'staging',
       },
     });
-    console.log(data);
+    console.log({data});
     console.log("Error: ", error);
   });
 
@@ -47,7 +47,7 @@ export default component$(() => {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: REDIRECT_URL,
+        emailRedirectTo: loc.url.href + 'staging',
       },
     });
 

@@ -1,25 +1,33 @@
 import { component$, useStore, useSignal, $ } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
+import { Link, useLocation } from "@builder.io/qwik-city";
 import { Message } from '~/components/site/ui/message'
-import { validateEmail } from "~/utils/helpers";
+import { validateEmail, showObject } from "~/utils/helpers";
 import { supabase } from "~/utils/supabase";
-import { REDIRECT_URL } from "../login";
+//import { REDIRECT_URL } from "../login";
 
 export default component$(() => {
   const message: any = useStore({ message: undefined, status: "error" });
+  const log: any = useStore({ message: 'no logs', status: "info"})
   const isLoading = useSignal(false);
-  // const loc = useLocation();
+  const loc = useLocation();
+
+  alert('Hey!')
+  const obj = {'name': 'logfile'}
+  log.message = JSON.stringify(obj)
 
   // Handle GitHub Login
   const handleGitHubSignUp= $(async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: REDIRECT_URL,
+        redirectTo: loc.url.origin + '/login/staging'
       },
     });
-    console.log(data);
-    console.log("Error: ", error);
+    const obj = {'GithubSignUp': [ {data}, {error}]}
+    showObject(obj)
+    // console.log('GitHubSignUp')
+    // console.log({data})
+    // console.log({error})
   });
 
   // Handle email signup
@@ -71,6 +79,9 @@ export default component$(() => {
       isLoading.value = false;
       return;
     }
+    console.log('EmailSignUp')
+    console.log({data})
+    console.log({error})
   });
 
   return (
@@ -226,6 +237,7 @@ export default component$(() => {
               </p>
             </div>
             <Message message={message} />
+            <Message message={log} />
           </form>
         </div>
       </div>

@@ -27,6 +27,9 @@ export default component$(() => {
         data: { session },
       } = await supabase.auth.getSession();
 
+      console.log({data})
+      console.log({session})
+
       if (session) {
         // Send cookies to server
         const body = {
@@ -43,7 +46,7 @@ export default component$(() => {
             console.log(res.data);
 
             // Set Auth State Context
-            userSession.userId = session?.user?.id;
+            userSession.userId = session.user.id;
             userSession.isLoggedIn = true;
           })
           .catch((err) => {
@@ -51,9 +54,9 @@ export default component$(() => {
           });
       }
 
-      if (data?.user?.id && !error) {
+      if (data.user?.id && !error) {
         isProtectedOk.value = true;
-        userSession.userId = data?.user?.id;
+        userSession.userId = data.user.id;
         userSession.isLoggedIn = true;
         nav("/members/dashboard");
       } else {
@@ -64,15 +67,13 @@ export default component$(() => {
       }
     }, 500);
 
-    return () => {
-      clearTimeout(timeout);
-    };
+    return () => clearTimeout(timeout)
   });
 
   return (
     <>
       <div>
-        {isProtectedOk && (
+        {isProtectedOk.value && (
           <>
             <span>Redirecting to </span>
             <Link href="/members/dashboard">
@@ -80,7 +81,7 @@ export default component$(() => {
             </Link>
           </>
         )}
-        {!isProtectedOk && <>Please log in</>}
+        {!isProtectedOk.value && <>Please log in</>}
       </div>
     </>
   );
